@@ -8,13 +8,14 @@
 ```bash
 docker-compose up --build
 ```
-2. Seed database 
+2. Start Prisma Studio (if you want to see database tables) 
 ```bash
-docker-compose exec app npx prisma db seed
+docker-compose exec app npx prisma studio
 ``` 
 3. Access app
 - localhost:3000 -> application server
-- localhost:5555 -> prisma studio (view database tables)
+- localhost:5555 -> prisma studio (after running previous bash command
 
 ## Notes
+- docker compose handles seeding some starter data 
 - environement variables should auto populate but each layer has an .env file to help out configuring
