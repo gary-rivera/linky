@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password_hash String @db.Char(60)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  urls ShortenedUrl[]
+}
+
+model ShortenedUrl {
+  id Int @id @default(autoincrement())
+  user_id Int?
+  original_url String @db.Text
+  slug String @unique @db.VarChar(25)
+  visit_count Int @default(0)
+  is_active Boolean @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User? @relation(fields: [user_id], references: [id])
+  visits Visit[]
+
+  @@index([user_id])
+}
+
+model Visit {
+  id Int @id @default(autoincrement())
+  shortened_url_id Int
+  visited_at DateTime @default(now())
+  ip_address String? @db.Inet
+  user_agent String? @db.Text
+
+  shortened_url ShortenedUrl @relation(fields: [shortened_url_id], references: [id])
+
+  @@index([shortened_url_id])
+  @@index([visited_at])
+}
