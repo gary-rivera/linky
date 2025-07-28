@@ -1,5 +1,7 @@
-import prisma from '../src/lib/prisma';
-import bcrypt from 'bcrypt';
+const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcrypt');
+
+const prisma = new PrismaClient();
 
 async function seedInit() {
 	console.log('[Prisma][seed] Planting seeds...');
@@ -67,7 +69,7 @@ async function seedInit() {
 	});
 }
 
-const createUserWithPassword = async (email: string, password_hash: string) =>
+const createUserWithPassword = async (email, password_hash) =>
 	prisma.user.upsert({
 		where: { email },
 		update: {},
