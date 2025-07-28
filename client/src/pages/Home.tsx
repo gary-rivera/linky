@@ -76,9 +76,7 @@ export default function Home() {
 		}
 	};
 
-	// New handler for when a dashboard card is clicked
 	const handleUrlCardClick = (url: UserUrl) => {
-		// Convert UserUrl to ShortenUrlSuccessResponse format
 		const shortenedUrlData: ShortenUrlSuccessResponse = {
 			id: url.id,
 			original_url: url.original_url,

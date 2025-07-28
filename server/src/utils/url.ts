@@ -51,7 +51,6 @@ const generateUrlCandidates = (url: string, hasProtocol: boolean): string[] => {
 	return [`https://${trimmed}`, `http://${trimmed}`];
 };
 const checkUrlReachability = async (url: string): Promise<boolean> => {
-	// basic validation
 	try {
 		console.log('[checkUrlReachability] ensuring URL is parseable...');
 		const parsedUrl = new URL(url);
@@ -62,7 +61,6 @@ const checkUrlReachability = async (url: string): Promise<boolean> => {
 		return false;
 	}
 
-	// reachability check
 	try {
 		console.log('[checkUrlReachability] checking url reachability...');
 		const controller = new AbortController();

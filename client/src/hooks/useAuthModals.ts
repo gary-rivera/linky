@@ -21,7 +21,6 @@ export const useAuthModals = () => {
 	const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
-	// Handle route-based modal opening
 	useEffect(() => {
 		if (location.pathname === '/login' && !user) {
 			setIsLoginModalOpen(true);
