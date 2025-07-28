@@ -38,6 +38,9 @@ RUN npm ci
 # Copy server source code and prisma schema
 COPY server/ ./
 
+# Debug: Check what's in prisma directory
+RUN ls -la prisma/
+
 # Generate Prisma client and build TypeScript
 RUN npx prisma generate
 RUN npm run build
@@ -66,6 +69,10 @@ COPY --from=client-builder --chown=nextjs:nodejs /app/client/dist ./client/dist
 
 # Copy any additional server files needed at runtime
 COPY --from=server-builder --chown=nextjs:nodejs /app/server/node_modules/.prisma ./server/node_modules/.prisma
+
+# Debug commands (run as root before switching user)
+RUN ls -la /app/server/prisma/
+RUN cat /app/server/package.json | grep -A5 prisma
 
 USER nextjs
 
